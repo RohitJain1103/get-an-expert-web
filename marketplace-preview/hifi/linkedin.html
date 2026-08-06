@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<title>Hi-fi · LinkedIn Marketeer detail</title>
+<style>
+  :root {
+    --bg: #F6F3ED; --ink: #211E1A; --ink-2: #5F594E; --ink-3: #8B8375;
+    --line: rgba(33,30,26,.08);
+    --glass: rgba(255,255,255,.55); --glass-strong: rgba(255,255,255,.78);
+    --accent: #C4593C; --accent-deep: #9E3F24; --accent-tint: rgba(196,89,60,.09);
+    --amber: #B97A1A;
+    --ease-out: cubic-bezier(0.23,1,0.32,1); --spring: cubic-bezier(0.34,1.56,0.64,1);
+    --radius-card: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+    color: var(--ink); background: var(--bg);
+    -webkit-font-smoothing: antialiased; letter-spacing: -0.004em;
+  }
+  .bg { position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(52vw 44vh at 16% 8%,  rgba(255,196,156,.52), transparent 68%),
+      radial-gradient(46vw 42vh at 86% 12%, rgba(206,190,255,.46), transparent 70%),
+      radial-gradient(58vw 50vh at 50% 104%, rgba(168,206,255,.42), transparent 70%);
+  }
+  .page { position: relative; z-index: 1; }
+  .sitebar { display:flex; align-items:center; justify-content:space-between; padding:18px clamp(18px,4vw,40px); }
+  .sitemark { display:flex; align-items:center; gap:7px; font-size:15px; font-weight:700; text-decoration:none; color:inherit; }
+  .worb { width:17px; height:17px; border-radius:50%; background:linear-gradient(140deg,#E8A184,var(--accent));
+    color:#fff; font-size:9px; display:inline-grid; place-items:center; }
+  .sitenav { display:flex; gap:18px; font-size:13.5px; }
+  .sitenav a { color:var(--ink-2); text-decoration:none; }
+
+  section.block { padding: clamp(36px,6vh,64px) 16px; }
+  .wrap { width: min(880px,100%); margin:0 auto; }
+  /* Direction A: serif display headlines, no italics, sans body */
+  .dhead h1, .shead h2, .guarantee h2 {
+    font-family:"Fraunces","Iowan Old Style",Georgia,serif;
+    font-weight:600; letter-spacing:-0.015em;
+  }
+  .eyebrow { display:block; font-size:11.5px; font-weight:650; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); }
+
+  /* Header */
+  .dhead { text-align:center; padding-top: clamp(28px,5vh,56px); }
+  .badge { display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-deep); background:var(--accent-tint); border:1px solid rgba(158,63,36,.28);
+    border-radius:999px; padding:4px 12px; }
+  .samplechip { display:inline-block; margin-left:6px; font-size:10.5px; font-weight:650; color:var(--amber);
+    background:rgba(185,122,26,.09); border:1px solid rgba(185,122,26,.3); border-radius:999px; padding:4px 12px; }
+  .dhead h1 { margin-top:16px; font-size:clamp(30px,5vw,42px); font-weight:750; letter-spacing:-0.03em; }
+  .dhead .promise { margin:12px auto 0; max-width:540px; font-size:clamp(15px,2.2vw,17px); color:var(--ink-2); line-height:1.5; }
+  .priceline { margin-top:16px; font-size:14px; font-weight:700; }
+  .priceline span { color:var(--ink-3); font-weight:400; }
+  .btn { display:inline-block; font-size:15px; font-weight:650; border-radius:999px; padding:13px 30px; text-decoration:none; }
+  .btn.solid { background:var(--accent-deep); color:#fff; box-shadow:0 8px 20px -6px rgba(158,63,36,.5);
+    transition: transform .2s var(--spring); }
+  .btn.solid:hover { transform: translateY(-2px) scale(1.02); }
+  .btn.ghost { color:var(--accent-deep); border:1px solid rgba(158,63,36,.3); background:var(--glass-strong); }
+  .btnrow { margin-top:22px; display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; }
+  .nocard { font-size:12.5px; color:var(--ink-3); }
+
+  .shead { text-align:center; margin-bottom:28px; }
+  .shead h2 { margin-top:10px; font-size:clamp(21px,3.4vw,27px); font-weight:700; letter-spacing:-0.02em; }
+  .shead p { margin-top:8px; color:var(--ink-2); font-size:14.5px; max-width:560px; margin-left:auto; margin-right:auto; line-height:1.5; }
+
+  /* You give / You get — visual flow */
+  .io-flow { display:grid; gap:16px; grid-template-columns:1fr; align-items:center; }
+  @media (min-width:721px){ .io-flow { grid-template-columns:1fr 44px 1fr; } }
+  .instack { display:flex; flex-direction:column; gap:10px; }
+  .incard { background:var(--glass-strong); border:1px solid rgba(33,30,26,.09); border-radius:14px;
+    padding:12px 14px; box-shadow:0 8px 20px -10px rgba(45,32,22,.15); }
+  .incard .t1 { font-size:13.5px; font-weight:650; }
+  .incard .t2 { font-size:12px; color:var(--ink-3); margin-top:2px; line-height:1.4; }
+  .io-arrow { text-align:center; font-size:20px; color:var(--accent-deep); font-weight:700; }
+  @media (max-width:720px){ .io-arrow { transform:rotate(90deg); } }
+
+  /* Output — what we run for you */
+  .growth { background:var(--glass-strong); border:1px solid rgba(33,30,26,.09); border-radius:18px;
+    padding:18px 18px 16px; box-shadow:0 22px 44px -16px rgba(45,32,22,.28); display:flex; flex-direction:column; gap:12px; }
+  .growth h4 { font-size:14px; font-weight:700; }
+  .grow-row { display:flex; gap:11px; align-items:flex-start; }
+  .grow-row .gd { flex:none; width:9px; height:9px; border-radius:50%; margin-top:5px; background:var(--accent-deep); }
+  .grow-row .gt1 { font-size:13.5px; font-weight:650; }
+  .grow-row .gt2 { font-size:12px; color:var(--ink-3); margin-top:1px; line-height:1.4; }
+  .growth .gcap { font-size:12px; color:var(--ink-2); border-top:1px solid rgba(33,30,26,.08); padding-top:11px; }
+
+  /* How it works — emoji-led, last card is the hero */
+  .how2 { display:grid; gap:12px; grid-template-columns:1fr; align-items:stretch; }
+  @media (min-width:560px){ .how2 { grid-template-columns:1fr 1fr; } }
+  @media (min-width:900px){ .how2 { grid-template-columns:repeat(4,1fr); } }
+  .h2c { background:var(--glass-strong); border:1px solid rgba(33,30,26,.09); border-radius:14px;
+    padding:18px 14px; text-align:center; box-shadow:0 8px 20px -10px rgba(45,32,22,.14); }
+  .h2c .em { font-size:26px; line-height:1; }
+  .h2c h3 { margin-top:9px; font-size:15px; font-weight:700; }
+  .h2c p { margin-top:4px; font-size:12.5px; color:var(--ink-2); line-height:1.4; }
+  .h2c.main { background:var(--accent-tint); border:1.5px solid rgba(158,63,36,.45); }
+  .h2c.main h3 { color:var(--accent-deep); }
+
+  /* What comes back — real post cards */
+  .posts { display:grid; gap:14px; grid-template-columns:1fr; }
+  @media (min-width:721px){ .posts { grid-template-columns:repeat(3,1fr); } }
+  .post { background:var(--glass-strong); border:1px solid rgba(33,30,26,.09); border-radius:var(--radius-card);
+    overflow:hidden; box-shadow:0 12px 30px -14px rgba(45,32,22,.22); display:flex; flex-direction:column; }
+  .pshot { position:relative; background:#fff; border-bottom:1px solid rgba(33,30,26,.08);
+    padding:14px; min-height:210px; display:flex; flex-direction:column; gap:9px; }
+  .pshot .pimg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .p-head { display:flex; align-items:center; gap:9px; }
+  .p-av { flex:none; width:30px; height:30px; border-radius:50%;
+    background:radial-gradient(circle at 34% 30%, #E8C9B0, #A87B5A 70%, #6B4A33); }
+  .p-name { height:7px; width:74px; border-radius:3px; background:rgba(33,30,26,.17); }
+  .p-sub { height:5px; width:52px; border-radius:3px; background:rgba(33,30,26,.09); margin-top:5px; }
+  .p-line { height:6px; border-radius:3px; background:rgba(33,30,26,.10); }
+  .p-media { flex:1; min-height:58px; border-radius:8px; background:rgba(33,30,26,.045); border:1px solid rgba(33,30,26,.06); }
+  .p-tbd { position:absolute; right:10px; top:10px; font-size:9.5px; font-weight:650; color:var(--amber);
+    background:rgba(185,122,26,.10); border:1px solid rgba(185,122,26,.3); border-radius:999px; padding:3px 8px; }
+  .pmeta { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; }
+  .pmeta .pstat { font-size:12.5px; font-weight:700; }
+  .pmeta .pstat small { display:block; font-size:11px; font-weight:400; color:var(--ink-3); margin-top:1px; }
+  .pmeta .plink { font-size:12.5px; font-weight:650; color:var(--accent-deep); white-space:nowrap; text-decoration:none; }
+  .postnote { text-align:center; font-size:12.5px; color:var(--ink-3); margin-top:16px; }
+
+  /* Pricing */
+  .tiers { display:grid; gap:14px; grid-template-columns:1fr; }
+  @media (min-width:721px){ .tiers { grid-template-columns:repeat(3,1fr); } }
+  @media (min-width:721px){ .tiers.two { grid-template-columns:repeat(2,1fr); max-width:640px; margin:0 auto; } }
+  .tier { background:var(--glass-strong); border:1px solid rgba(33,30,26,.09); border-radius:var(--radius-card);
+    padding:22px; box-shadow:0 10px 26px -12px rgba(45,32,22,.15); display:flex; flex-direction:column; gap:8px; }
+  .tier.hot { border:1.5px solid rgba(158,63,36,.45); }
+  .tier .tname { font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-2); }
+  .tier .tprice { font-size:24px; font-weight:750; letter-spacing:-0.02em; }
+  .tier .tprice small { font-size:13px; font-weight:400; color:var(--ink-3); }
+  .tier p { font-size:13.5px; color:var(--ink-2); line-height:1.45; flex:1; }
+  .tier .tcta { margin-top:6px; text-align:center; font-size:13.5px; font-weight:650; color:var(--accent-deep);
+    border:1px solid rgba(158,63,36,.3); border-radius:999px; padding:9px; text-decoration:none; }
+  .tier .tcta.solid { background:var(--accent-deep); color:#fff; }
+  .pricenote { text-align:center; font-size:12.5px; color:var(--ink-3); margin-top:16px; }
+
+  /* Guarantee / safety */
+  .guarantee { text-align:center; background:var(--glass); border:1px solid var(--line);
+    border-radius:var(--radius-card); padding:30px 22px; }
+  .guarantee h2 { font-size:clamp(19px,3vw,24px); font-weight:700; letter-spacing:-0.02em; max-width:600px; margin:0 auto; }
+  .guarantee p { margin-top:10px; color:var(--ink-2); font-size:14.5px; max-width:560px; margin-left:auto; margin-right:auto; line-height:1.5; }
+
+  /* Intake */
+  .form { background:var(--glass-strong); border:1px solid rgba(33,30,26,.09); border-radius:var(--radius-card);
+    padding:24px; box-shadow:0 10px 26px -12px rgba(45,32,22,.15); }
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:13px; font-weight:650; margin-bottom:6px; }
+  .field label small { color:var(--ink-3); font-weight:400; }
+  .field input, .field textarea {
+    width:100%; border:1px solid rgba(33,30,26,.14); border-radius:10px; background:#fff;
+    font:inherit; font-size:14px; padding:11px 13px; color:var(--ink); outline:none; }
+  .field input:focus, .field textarea:focus { border-color:rgba(158,63,36,.5); }
+  .field textarea { min-height:84px; resize:vertical; }
+  .fieldnote { font-size:11.5px; color:var(--ink-3); margin-top:6px; line-height:1.4; }
+  .formnote { text-align:center; font-size:12.5px; color:var(--ink-3); margin-top:12px; }
+
+  /* FAQ */
+  .faq details { border-bottom:1px solid var(--line); padding:14px 2px; }
+  .faq summary { font-size:14.5px; font-weight:650; cursor:pointer; list-style:none; }
+  .faq summary::after { content:"+"; float:right; color:var(--ink-3); }
+  .faq details[open] summary::after { content:"–"; }
+  .faq details p { margin-top:8px; font-size:13.5px; color:var(--ink-2); line-height:1.5; }
+  .tbd { color:var(--amber); font-size:12px; font-weight:650; }
+
+  .cross { text-align:center; }
+  .foot { text-align:center; color:var(--ink-3); font-size:12.5px; padding:26px 16px 40px; }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="page">
+
+  <header class="sitebar">
+    <a class="sitemark" href="index.html"><span class="worb">✳︎</span>midsesh</a>
+    <nav class="sitenav"><a href="index.html">All services</a><a href="#">Contact</a><a href="#">Sign in</a></nav>
+  </header>
+
+  <!-- 1 · Header -->
+  <section class="block dhead">
+    <div class="wrap">
+      <span class="badge">Human + Agent</span><span class="samplechip">Human run, human reviewed</span>
+      <h1>LinkedIn Marketeer</h1>
+      <p class="promise">Your LinkedIn all handled by our agents. Posts, comments, and engagements all reviewed by a human before anything ships.</p>
+      <div class="priceline">Pay per 10k impressions <span>· $100 per 10k in your relevant audience</span></div>
+      <div class="btnrow">
+        <a class="btn solid" href="#start">Start growing</a>
+        <span class="nocard">A human runs it, a human reviews it</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · You give / You get -->
+  <section class="block">
+    <div class="wrap">
+      <div class="shead">
+        <span class="eyebrow">Input, output</span>
+        <h2>Your access in. Real growth out.</h2>
+        <p>You want impressions from the people who matter, not vanity numbers. You tell us who, we do the rest.</p>
+      </div>
+      <div class="io-flow">
+        <div class="instack">
+          <div class="incard">
+            <div class="t1">Your LinkedIn and access</div>
+            <div class="t2">Your profile so we can post and engage as you</div>
+          </div>
+          <div class="incard">
+            <div class="t1">Where you want to grow</div>
+            <div class="t2">Your intent and goal for the account</div>
+          </div>
+          <div class="incard">
+            <div class="t1">Your target ICP</div>
+            <div class="t2">Location, industry, and the filters that matter</div>
+          </div>
+          <div class="incard">
+            <div class="t1">Your topics</div>
+            <div class="t2">The expertise you want to be known for</div>
+          </div>
+        </div>
+        <div class="io-arrow">→</div>
+        <div class="growth">
+          <h4>We run it like you would</h4>
+          <div class="grow-row"><span class="gd"></span><div><div class="gt1">Posts in your voice</div><div class="gt2">Published on your profile, reviewed before they ship</div></div></div>
+          <div class="grow-row"><span class="gd"></span><div><div class="gt1">Comments on your ICP</div><div class="gt2">On the posts your target audience is already reading</div></div></div>
+          <div class="grow-row"><span class="gd"></span><div><div class="gt1">Connection requests</div><div class="gt2">To the relevant people, not to everyone</div></div></div>
+          <div class="grow-row"><span class="gd"></span><div><div class="gt1">Engagement that compounds</div><div class="gt2">The replies and follows that grow your reach</div></div></div>
+          <div class="gcap">Everything a human plus agent would do on the platform, done for you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · How it works -->
+  <section class="block">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">How it works</span><h2>You review, then you pay.</h2></div>
+      <div class="how2">
+        <div class="h2c"><div class="em">🎯</div><h3>We target</h3><p>Your ICP by location, industry, and filters.</p></div>
+        <div class="h2c"><div class="em">✍️</div><h3>We post and engage</h3><p>In your voice, on the right people's feeds.</p></div>
+        <div class="h2c"><div class="em">🤝</div><h3>We grow your network</h3><p>Comments, connections, and real engagement.</p></div>
+        <div class="h2c main"><div class="em">✅</div><h3>You review and pay</h3><p>You see the growth first. Pay for impressions in your ICP.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · What comes back -->
+  <section class="block">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">What comes back</span><h2>Posts that actually landed.</h2></div>
+      <div class="posts">
+        <!-- Swap each placeholder: <img class="pimg" src="shots/post-1.png" alt=""> inside .pshot,
+             set the impressions figure, and point .plink at the real post URL. -->
+        <div class="post">
+          <div class="pshot">
+            <span class="p-tbd">Screenshot TBD</span>
+            <div class="p-head"><div class="p-av"></div><div><div class="p-name"></div><div class="p-sub"></div></div></div>
+            <div class="p-line"></div><div class="p-line" style="width:82%;"></div>
+            <div class="p-media"></div>
+          </div>
+          <div class="pmeta"><span class="pstat">Impressions TBD<small>real post</small></span><a class="plink" href="#">View on LinkedIn →</a></div>
+        </div>
+        <div class="post">
+          <div class="pshot">
+            <span class="p-tbd">Screenshot TBD</span>
+            <div class="p-head"><div class="p-av"></div><div><div class="p-name"></div><div class="p-sub"></div></div></div>
+            <div class="p-line"></div><div class="p-line" style="width:74%;"></div>
+            <div class="p-media"></div>
+          </div>
+          <div class="pmeta"><span class="pstat">Impressions TBD<small>real post</small></span><a class="plink" href="#">View on LinkedIn →</a></div>
+        </div>
+        <div class="post">
+          <div class="pshot">
+            <span class="p-tbd">Screenshot TBD</span>
+            <div class="p-head"><div class="p-av"></div><div><div class="p-name"></div><div class="p-sub"></div></div></div>
+            <div class="p-line"></div><div class="p-line" style="width:88%;"></div>
+            <div class="p-media"></div>
+          </div>
+          <div class="pmeta"><span class="pstat">Impressions TBD<small>real post</small></span><a class="plink" href="#">View on LinkedIn →</a></div>
+        </div>
+      </div>
+      <div class="postnote">Real posts from a real profile. Every card links to the live post, so you can check it yourself.</div>
+    </div>
+  </section>
+
+  <!-- 5 · Pricing -->
+  <section class="block">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">Pricing</span><h2>Pay for reach to the right people.</h2></div>
+      <div class="tiers two">
+        <div class="tier hot">
+          <div class="tname">Per 10k impressions</div>
+          <div class="tprice">$100 <small>per 10k in your target ICP</small></div>
+          <p>You pay for reach to the people who match your ICP, not for vanity views. Posts, comments, and connections included.</p>
+          <a class="tcta solid" href="#start">Start growing</a>
+        </div>
+        <div class="tier">
+          <div class="tname">Ongoing growth</div>
+          <div class="tprice">$ — <small><span class="tbd">price TBD</span></small></div>
+          <p>Monthly management across posts, comments, and connections at volume. We scope this with you before anything starts.</p>
+          <a class="tcta" href="#start">Talk to us</a>
+        </div>
+      </div>
+      <div class="pricenote">Pricing starts here. We will confirm the exact plan with you. <span class="tbd">TBD</span></div>
+    </div>
+  </section>
+
+  <!-- 6 · Safety -->
+  <section class="block">
+    <div class="wrap">
+      <div class="guarantee">
+        <h2>A human runs it. A human reviews it. Your account stays safe.</h2>
+        <p>No bots hammering your profile. A person does the work at human pace, the way you would, and reviews everything before it goes out. You do not have to worry about anything getting banned or flagged.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · Intake form -->
+  <section class="block" id="start">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">Start growing</span><h2>Tell us where to grow</h2></div>
+      <div class="form">
+        <div class="field">
+          <label>LinkedIn profile URL</label>
+          <input type="url" placeholder="https://linkedin.com/in/you">
+          <div class="fieldnote">We set up access securely after you start. No password goes in this form.</div>
+        </div>
+        <div class="field">
+          <label>Where you want to grow</label>
+          <textarea placeholder="Your goal for the account and what growth would look like"></textarea>
+        </div>
+        <div class="field">
+          <label>Your target ICP</label>
+          <textarea placeholder="Location, industry, and any filters that matter (title, company size, seniority)"></textarea>
+        </div>
+        <div class="field">
+          <label>Your topics <small>the expertise you want to be known for</small></label>
+          <textarea placeholder="What you want to post about and be known for"></textarea>
+        </div>
+        <div class="btnrow"><a class="btn solid" href="#">Start growing</a></div>
+        <div class="formnote">No payment step. A human reaches out to set up access and confirm your plan. <span class="tbd">SLA TBD</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · FAQ -->
+  <section class="block">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">FAQ</span><h2>The fine print, plainly</h2></div>
+      <div class="faq">
+        <details><summary>Will my account get banned or flagged?</summary><p>No. A human does the work at human pace and reviews everything before it ships. There is no bot hammering the platform, which is what puts accounts at risk.</p></details>
+        <details><summary>Who actually does it?</summary><p>A human expert, supported by an agent. Every post and every interaction is reviewed by a person before it goes out.</p></details>
+        <details><summary>Will the posts sound like me?</summary><p>Yes. We write in your voice from your topics and your intent. Nothing ships without your review.</p></details>
+        <details><summary>What do you need from me?</summary><p>Your LinkedIn profile and access, where you want to grow, and your target ICP. We handle the rest.</p></details>
+        <details><summary>What counts as an impression in my ICP?</summary><p>A view from someone who matches your location, industry, and filters, rather than any view at all. <span class="tbd">Exact measurement TBD.</span></p></details>
+        <details><summary>Do I keep control?</summary><p>Yes. You review before anything ships and you can pause anytime.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · Cross-sell -->
+  <section class="block cross">
+    <div class="wrap">
+      <div class="btnrow">
+        <a class="btn ghost" href="index.html">Browse all services</a>
+        <a class="btn ghost" href="#">Ask for something custom</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">midsesh · Contact · Privacy</div>
+
+</div>
+</body>
+</html>
